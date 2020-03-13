@@ -1,0 +1,28 @@
+#!/usr/bin/env ansible-playbook
+
+
+- name: run ansible on android
+  hosts: android
+  gather_facts: no
+  tasks:
+    - name: pkg install packages
+      command: pkg install {{item}}
+      loop:
+        - root-repo
+        - x11-repo
+        - unstable-repo
+        - zsh
+        - git
+        - htop
+        - tree
+        - curl
+        - net-tools
+        - neofetch
+        - w3m
+        - sl
+
+    - name: pip install packages
+      pip:
+        name:
+          - ipython
+          - youtube-dl
