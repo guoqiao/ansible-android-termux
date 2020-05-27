@@ -6,6 +6,10 @@
   gather_facts: no
   tasks:
 
+    - name: setup storage on phone to allow access to internal storeage
+      debug:
+        msg: run `termux-setup-storage` on your phone
+
     - name: pkg install packages
       command: pkg install --yes {{item}}
       loop:
