@@ -40,10 +40,15 @@
     - name: create gplaycli.conf
       template:
         src: "templates/gplaycli.conf"
-        dest: "bin/gplaycli.conf"
+        # put it in home, so we can run gplaycli from there
+        dest: "gplaycli.conf"
+      tags:
+        - files
 
     - name: create bin/termux-url-opener
       template:
         src: "templates/termux-url-opener"
         dest: "bin/termux-url-opener"
         mode: "0755"
+      tags:
+        - files
