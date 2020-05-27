@@ -33,9 +33,9 @@ def main():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=__doc__)
 
-    #  parser.add_argument(
-        #  '-v', '--verbose', action='store_true',
-        #  help='Be verbose')
+    parser.add_argument(
+        '-v', '--verbose', action='store_true',
+        help='Be verbose')
 
     parser.add_argument(
         'url',
@@ -43,8 +43,7 @@ def main():
 
     args = parser.parse_args()
 
-    #  level = logging.DEBUG if args.verbose else logging.WARNING
-    level = logging.DEBUG
+    level = logging.DEBUG if args.verbose else logging.WARNING
     fmt = '%(asctime)s %(levelname)s %(name)s: %(message)s'
     logging.basicConfig(level=level, format=fmt)
 
