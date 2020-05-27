@@ -12,19 +12,27 @@ import os
 import time
 import logging
 import subprocess
+from pathlib import Path
 from urllib.parse import urlparse, parse_qs
 
 
 LOG = logging.getLogger('termux-url-opener')
-HOME = os.getenv('HOME')
-HERE = os.path.dirname(os.path.abspath(__file__))
-DIR = os.path.join(HOME, 'storage/downloads')
-os.makedirs(DIR, exist_ok=True)
-GPLAYCLI_CONF = os.path.join(HOME, 'gplaycli.conf')
+
+HOME = Path(__file__).home()
+GPLAYCLI_CONF = HOME / 'gplaycli.conf'
+STORAGE = HOME / 'storage'
+SHARED = STORAGE / 'shared'
+VIDEO = SHARED / 'Video'
+MUSIC = SHARED / 'Music'
+IMAGE = SHARED / 'Pictures'
+DOWNLOAD = SHARED / 'Download'
+
 
 def run_cmd(cmd):
+    str_cmd = ' '.join(cmd)
+    LOG.info('cmd start: %s', str_cmd)
     subprocess.call(cmd)
-    LOG.info(' '.join(cmd))
+    LOG.info('cmd finish: %s', str_cmd)
 
 
 def main():
@@ -34,12 +42,10 @@ def main():
         epilog=__doc__)
 
     parser.add_argument(
-        '-v', '--verbose', action='store_true',
-        help='Be verbose')
+        '-v', '--verbose', action='store_true', help='Be verbose')
 
     parser.add_argument(
-        'url',
-        help='shared url')
+        'url', help='url shared to Termux')
 
     args = parser.parse_args()
 
@@ -54,7 +60,16 @@ def main():
         run_cmd([
             'youtube-dl',
             '--format', 'best',
-            '--output', f'{DIR}/%(title)s.%(ext)s',
+            '--output', f'{VIDEO}/%(title)s.%(ext)s',
+            url,
+        ])
+    elif url.startswith('https://music.youtube.com'):
+        run_cmd([
+            'youtube-dl',
+            '--format', 'bestaudio',
+            '--extract-audio',
+            '--audio-format', 'mp3',
+            '--output', f'{MUSIC}/%(title)s.%(ext)s',
             url,
         ])
     elif url.startswith('https://play.google.com/store/apps'):
@@ -63,7 +78,7 @@ def main():
         run_cmd([
             'gplaycli', '--verbose', '--yes', '--append-version', '--progress',
             '--config', GPLAYCLI_CONF,
-            '--download', params['id'][0], '--folder', DIR,
+            '--download', params['id'][0], '--folder', DOWNLOAD,
         ])
     # termux will be close, sleep for user to read output
     sleep = 5
