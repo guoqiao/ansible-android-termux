@@ -36,3 +36,14 @@
           - pymusic-dl
           - gplaycli
           - ssh-import-id
+
+    - name: create gplaycli.conf
+      template:
+        src: "templates/gplaycli.conf"
+        dest: "bin/gplaycli.conf"
+
+    - name: create bin/termux-url-opener
+      template:
+        src: "templates/termux-url-opener"
+        dest: "bin/termux-url-opener"
+        mode: "0755"
