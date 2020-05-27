@@ -1,0 +1,70 @@
+#!/usr/bin/env python3
+"""Termux URL Opener
+
+On Android, share URL to Termux, it will be processed by this script.
+
+- YouTube: download video
+- Google Play: download apk
+"""
+
+import argparse
+import os
+import logging
+import subprocess
+from urllib.parse import urlparse, parse_qs
+
+
+LOG = logging.getLogger('termux-url-opener')
+HOME = os.getenv('HOME')
+DIR = os.path.join(HOME, 'storage/shared')
+os.makedirs(DIR, exist_ok=True)
+
+
+def run_cmd(cmd):
+    print(cmd)
+    LOG.info(' '.join(cmd))
+    return subprocess.call(cmd)
+
+
+def main():
+    parser = argparse.ArgumentParser(
+        description='Termux URL Opener',
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog=__doc__)
+
+    #  parser.add_argument(
+        #  '-v', '--verbose', action='store_true',
+        #  help='Be verbose')
+
+    parser.add_argument(
+        'url',
+        help='shared url')
+
+    args = parser.parse_args()
+
+    #  level = logging.DEBUG if args.verbose else logging.WARNING
+    level = logging.DEBUG
+    fmt = '%(asctime)s %(levelname)-8s %(name)s: %(message)s'
+    logging.basicConfig(level=level, format=fmt)
+
+    url = args.url
+    LOG.info(url)
+
+    if url.startswith('https://youtube.com'):
+        run_cmd([
+            'youtube-dl',
+            '--format', 'best',
+            '--output', f'{DIR}/%(title)s.%(ext)s',
+            url,
+        ])
+    elif url.startswith('https://play.google.com/store/apps'):
+        parse_result = urlparse(url)
+        params = parse_qs(parse_result.query)
+        run_cmd([
+            'gplaycli', '--verbose', '--yes', '--append-version', '--progress',
+            '--download', params['id'][0], '--folder', DIR,
+        ])
+
+
+if __name__ == '__main__':
+    main()
