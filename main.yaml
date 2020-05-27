@@ -2,27 +2,33 @@
 
 
 - name: run ansible on android
-  hosts: android
+  hosts: termux
   gather_facts: no
   tasks:
+
     - name: pkg install packages
-      command: pkg install {{item}}
+      command: pkg install --yes {{item}}
       loop:
         - root-repo
         - x11-repo
         - unstable-repo
+        - libxml2
+        - libxslt
+        - python
+        - openssh
+        - ffmpeg
         - zsh
-        - git
-        - htop
-        - tree
         - curl
-        - net-tools
-        - neofetch
-        - w3m
-        - sl
+        - wget
+        - vim
+        - git
 
     - name: pip install packages
       pip:
         name:
+          - pip
           - ipython
           - youtube-dl
+          - pymusic-dl
+          - gplaycli
+          - ssh-import-id
