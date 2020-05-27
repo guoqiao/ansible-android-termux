@@ -26,6 +26,7 @@
         - wget
         - vim
         - git
+        - htop
 
     - name: pip install packages
       pip:
