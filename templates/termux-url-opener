@@ -80,10 +80,10 @@ def main():
             '--config', GPLAYCLI_CONF,
             '--download', params['id'][0], '--folder', DOWNLOAD,
         ])
+    else:
+        LOG.error('sorry, unable to handle url: %s', url)
     # termux will be close, sleep for user to read output
-    sleep = 5
-    LOG.info('task finished, exit in %d secs ...', sleep)
-    time.sleep(5)
+    input('press any key to continue...')
 
 
 if __name__ == '__main__':
