@@ -48,8 +48,11 @@
 
     - name: create bin/termux-url-opener
       template:
-        src: "templates/termux-url-opener"
-        dest: "bin/termux-url-opener"
+        src: "templates/{{ item }}"
+        dest: "bin/{{ item }}"
         mode: "0755"
+      loop:
+        - termux-url-opener
+        - termux-file-editor
       tags:
         - files
