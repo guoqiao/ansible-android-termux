@@ -42,14 +42,14 @@ def main():
         epilog=__doc__)
 
     parser.add_argument(
-        '-v', '--verbose', action='store_true', help='Be verbose')
+        '-q', '--quiet', action='store_true', help='Be quiet')
 
     parser.add_argument(
         'url', help='url shared to Termux')
 
     args = parser.parse_args()
 
-    level = logging.DEBUG if args.verbose else logging.WARNING
+    level = logging.ERROR if args.quiet else logging.DEBUG
     fmt = '%(asctime)s %(levelname)s %(name)s: %(message)s'
     logging.basicConfig(level=level, format=fmt)
 
