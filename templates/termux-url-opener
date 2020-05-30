@@ -31,7 +31,7 @@ DOWNLOAD = SHARED / 'Download'
 def run_cmd(cmd):
     str_cmd = ' '.join(cmd)
     LOG.info('cmd start: %s', str_cmd)
-    subprocess.call(cmd)
+    subprocess.check_call(cmd)
     LOG.info('cmd finish: %s', str_cmd)
 
 
