@@ -56,7 +56,7 @@ def main():
     url = args.url
     LOG.info(url)
 
-    if url.startswith('https://www.youtube.com'):
+    if url.startswith(('https://www.youtube.com', 'https://youtu.be')):
         run_cmd([
             'youtube-dl',
             '--format', 'best',
