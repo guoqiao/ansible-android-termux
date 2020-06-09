@@ -1,4 +1,4 @@
-#!/data/data/com.termux/files/usr/bin/python3
+#!/usr/bin/env python3
 """Termux URL Opener
 
 On Android, share URL to Termux, it will be processed by this script.
@@ -8,8 +8,6 @@ On Android, share URL to Termux, it will be processed by this script.
 """
 
 import argparse
-import os
-import time
 import logging
 import subprocess
 from pathlib import Path
@@ -19,13 +17,10 @@ from urllib.parse import urlparse, parse_qs
 LOG = logging.getLogger(__name__)
 
 HOME = Path(__file__).home()
-GPLAYCLI_CONF = HOME / 'gplaycli.conf'
-STORAGE = HOME / 'storage'
-SHARED = STORAGE / 'shared'
-VIDEO = SHARED / 'Video'
-MUSIC = SHARED / 'Music'
-IMAGE = SHARED / 'Pictures'
-DOWNLOAD = SHARED / 'Download'
+VIDEO = HOME / 'Video'
+MUSIC = HOME / 'Music'
+IMAGE = HOME / 'Pictures'
+DOWNLOAD = HOME / 'Download'
 
 
 def run_cmd(cmd):
@@ -69,7 +64,7 @@ def main():
             '--format', 'bestaudio',
             '--extract-audio',
             '--audio-format', 'mp3',
-            '--output', f'{MUSIC}/%(title)s.%(ext)s',
+            '--output', f'{MUSIC}/%(artist)s/%(title)s.%(ext)s',
             url,
         ])
     elif url.startswith('https://play.google.com/store/apps'):
@@ -77,7 +72,7 @@ def main():
         params = parse_qs(parse_result.query)
         run_cmd([
             'gplaycli', '--verbose', '--yes', '--append-version', '--progress',
-            '--config', GPLAYCLI_CONF,
+            '--config', HOME / 'gplaycli.conf',
             '--download', params['id'][0], '--folder', DOWNLOAD,
         ])
     else:
