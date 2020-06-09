@@ -46,12 +46,13 @@
       tags:
         - files
 
-    - name: create bin/termux-url-opener
+    - name: copy scripts
       template:
         src: "templates/{{ item }}"
         dest: "bin/{{ item }}"
         mode: "0755"
       loop:
+        - any-get.py
         - termux-url-opener
         - termux-file-editor
       tags:
