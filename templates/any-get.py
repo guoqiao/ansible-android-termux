@@ -16,7 +16,7 @@ from pathlib import Path
 from urllib.parse import urlparse, parse_qs
 
 
-LOG = logging.getLogger('termux-url-opener')
+LOG = logging.getLogger(__name__)
 
 HOME = Path(__file__).home()
 GPLAYCLI_CONF = HOME / 'gplaycli.conf'
