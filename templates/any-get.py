@@ -16,6 +16,8 @@ from urllib.parse import urlparse, parse_qs
 
 LOG = logging.getLogger(__name__)
 
+HERE = Path(__file__).resolve().parent
+
 HOME = Path(__file__).home()
 VIDEO = HOME / 'Video'
 MUSIC = HOME / 'Music'
@@ -72,8 +74,8 @@ def main():
         params = parse_qs(parse_result.query)
         run_cmd([
             'gplaycli', '--verbose', '--yes', '--append-version', '--progress',
-            '--config', HOME / 'gplaycli.conf',
-            '--download', params['id'][0], '--folder', DOWNLOAD,
+            '--config', str(HERE/'gplaycli.conf'),
+            '--download', params['id'][0], '--folder', str(DOWNLOAD),
         ])
     else:
         LOG.error('sorry, unable to handle url: %s', url)
