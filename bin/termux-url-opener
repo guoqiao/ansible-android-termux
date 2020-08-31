@@ -4,6 +4,7 @@
 On Android, share URL to Termux, it will be processed by this script.
 
 - YouTube: download video
+- YouTube Music: download music as mp3
 - Google Play: download apk
 """
 
