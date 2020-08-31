@@ -16,13 +16,13 @@ from urllib.parse import urlparse, parse_qs
 
 LOG = logging.getLogger(__name__)
 
-HERE = Path(__file__).resolve().parent
-
 HOME = Path(__file__).home()
-VIDEO = HOME / 'Video'
-MUSIC = HOME / 'Music'
-IMAGE = HOME / 'Pictures'
-DOWNLOAD = HOME / 'Download'
+STORAGE = HOME / 'storage'
+
+MUSIC = STORAGE / 'music'
+PICTURES = STORAGE / 'pictures'
+MOVIES = STORAGE / 'movies'
+DOWNLOADS = STORAGE / 'downloads'
 
 
 def run_cmd(cmd):
@@ -74,11 +74,7 @@ def main():
         params = parse_qs(parse_result.query)
         run_cmd([
             'gplaycli', '--verbose', '--yes', '--append-version', '--progress',
-<<<<<<< HEAD
             '--config', str(HOME/'gplaycli.conf'),
-=======
-            '--config', str(HERE/'gplaycli.conf'),
->>>>>>> 628209af0780f79eb1d202c0d4fc56f2fd476243
             '--download', params['id'][0], '--folder', str(DOWNLOAD),
         ])
     else:

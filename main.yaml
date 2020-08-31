@@ -27,6 +27,7 @@
         - vim
         - git
         - htop
+        - rsync
 
     - name: pip install packages
       pip:
@@ -38,7 +39,7 @@
           - gplaycli
           - ssh-import-id
 
-    - name: create gplaycli.conf
+    - name: render gplaycli.conf
       template:
         src: "templates/gplaycli.conf"
         # put it in home, so we can run gplaycli from there
@@ -46,14 +47,9 @@
       tags:
         - files
 
-    - name: copy scripts
-      template:
-        src: "templates/{{ item }}"
-        dest: "bin/{{ item }}"
-        mode: "0755"
-      loop:
-        - any-get.py
-        - termux-url-opener
-        - termux-file-editor
+    - name: sync bin dir to remote
+      synchronize:
+        src: "bin/"
+        dest: "bin/"
       tags:
         - files
