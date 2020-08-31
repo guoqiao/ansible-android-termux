@@ -1,7 +1,0 @@
-#!/data/data/com.termux/files/usr/bin/bash
-
-set -xue
-
-FILE=$1
-echo $FILE
-vim $FILE
