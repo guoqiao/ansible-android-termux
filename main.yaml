@@ -29,6 +29,7 @@
         - git
         - htop
         - rsync
+        - neofetch
 
     - name: pip install packages
       pip:
