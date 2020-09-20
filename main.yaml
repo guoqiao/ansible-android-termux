@@ -40,6 +40,12 @@
           - gplaycli
           - ssh-import-id
 
+    - name: make dirs
+      file:
+        path: bin/
+        state: directory
+        mode: '0755'
+
     - name: render gplaycli.conf
       template:
         src: "templates/gplaycli.conf"
@@ -54,3 +60,23 @@
         dest: "bin/"
       tags:
         - files
+
+    - name: download oh-my-zsh install script
+      get_url:
+        url: https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
+        dest: ./install.sh
+        mode: '0755'
+      tags: oh-my-zsh
+
+    - name: run oh-my-zsh install script
+      command: chsh -s zsh && ./install.sh
+      tags: oh-my-zsh
+
+    - name: download apks
+      get_url:
+        url: "{{ item }}"
+        dest: "storage/downloads/"
+      loop:
+        - https://f-droid.org/F-Droid.apk
+        - https://dl.cmbimg.com/AndroidClient/CMBMobileBank.apk
+      tags: apk
