@@ -4,21 +4,22 @@ Use Ansible to setup Termux on Android.
 
 ## Initial setup for Ansible
 
-Allow access to internal storage: `termux-setup-storage`
+- Install pkgs: `pkg install -y openssh python`
 
-Install pkgs: `pkg install openssh python`
-
-Start sshd service: `sshd`
-
-Import ssh public key from github/launchpad:
+- Import ssh public key from github/launchpad:
 
     pip install ssh-import-id
-    ssh-import-id gh:$GITHUB_USERNAME
-    ssh-import-id lp:$LAUNCHPAD_USERNAME
+    ssh-import-id gh:$GITHUB_USERNAME  # if you have imported your pub key to github
+    ssh-import-id lp:$LAUNCHPAD_USERNAME  # if you have imported your pub key to launchpad
 
-Now you should be able to access your device with ssh:
+- Allow access to internal storage: `termux-setup-storage`
 
-    ssh -i /path/to/ssh/pubkey -p 8022 $IP
+- Start sshd service: `sshd`
+
+- Verify ssh connectin:
+
+    ip addr  # find your $IP
+    ssh -i ~/.ssh/id_rsa -p 8022 $IP
 
 In Ansible inventory `hosts.ini`:
 
