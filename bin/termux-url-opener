@@ -57,14 +57,14 @@ def main():
 
     if url.startswith(('https://www.youtube.com', 'https://youtu.be')):
         run_cmd([
-            'youtube-dl',
+            'youtube-dlc',
             '--format', 'best',
             '--output', f'{VIDEO}/%(title)s.%(ext)s',
             url,
         ])
     elif url.startswith('https://music.youtube.com'):
         run_cmd([
-            'youtube-dl',
+            'youtube-dlc',
             '--format', 'bestaudio',
             '--extract-audio',
             '--audio-format', 'mp3',

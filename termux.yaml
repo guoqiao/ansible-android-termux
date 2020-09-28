@@ -36,7 +36,7 @@
         name:
           - pip
           - ipython
-          - youtube-dl
+          - youtube-dlc
           - pymusic-dl
           - gplaycli
           - ssh-import-id
