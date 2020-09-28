@@ -22,9 +22,12 @@ HOME = Path(__file__).home()
 STORAGE = HOME / 'storage'
 SHARED = STORAGE / 'shared'
 
+# follow Ubuntu dir names
+# on macOS, no Videos, but has Movies
 MUSIC = SHARED / 'Music'
-VIDEO = SHARED / 'Video'
-DOWNLOAD = SHARED / 'Download'
+PICTURES = SHARED / 'Pictures'
+VIDEOS = SHARED / 'Videos'
+DOWNLOADS = SHARED / 'Downloads'
 
 
 def run_cmd(cmd):
@@ -59,7 +62,7 @@ def main():
         run_cmd([
             'youtube-dlc',
             '--format', 'best',
-            '--output', f'{VIDEO}/%(title)s.%(ext)s',
+            '--output', f'{VIDEOS}/%(title)s.%(ext)s',
             url,
         ])
     elif url.startswith('https://music.youtube.com'):
@@ -77,7 +80,7 @@ def main():
         run_cmd([
             'gplaycli', '--verbose', '--yes', '--append-version', '--progress',
             '--config', str(HERE/'gplaycli.conf'),
-            '--download', params['id'][0], '--folder', str(DOWNLOAD),
+            '--download', params['id'][0], '--folder', str(DOWNLOADS),
         ])
     else:
         LOG.error('sorry, unable to handle url: %s', url)
