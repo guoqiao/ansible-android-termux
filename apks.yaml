@@ -1,0 +1,38 @@
+#!/usr/bin/env ansible-playbook
+
+- name: download apks
+  hosts: localhost
+  gather_facts: no
+  vars:
+    download_dir: "{{ playbook_dir }}/download"
+    googleplay_apk_ids:
+      - com.pushbullet.android
+      - com.termux
+      - com.bp.bpmenz
+      - nz.hwem.gaspy
+      - nz.co.warehousemobile.app
+      - com.mattermost.rnbeta
+      - com.azure.authenticator
+      - com.qianyan.eudic
+      - com.xiaomi.hm.health
+      - com.dragonflow  # NETGEAR Genie
+      - com.here.app.maps
+    googleplay_apk_ids_line: "{{ googleplay_apk_ids|join(' ') }}"
+
+  tasks:
+
+    - name: download apks from google play via gplycli
+      # using a forked local version
+      command: >
+        gplaycli --verbose --progress --yes
+        --config /etc/gplaycli.conf
+        --download {{ googleplay_apk_ids_line }}
+        --folder {{ download_dir }}
+
+    - name: download apks via url
+      get_url:
+        url: "{{ item }}"
+        dest: "{{ download_dir }}"
+      loop:
+        - https://f-droid.org/F-Droid.apk
+        - https://dl.cmbimg.com/AndroidClient/CMBMobileBank.apk
