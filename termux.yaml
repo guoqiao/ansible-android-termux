@@ -71,12 +71,3 @@
     - name: run oh-my-zsh install script
       command: chsh -s zsh && ./install.sh
       tags: oh-my-zsh
-
-    - name: download apks
-      get_url:
-        url: "{{ item }}"
-        dest: "storage/downloads/"
-      loop:
-        - https://f-droid.org/F-Droid.apk
-        - https://dl.cmbimg.com/AndroidClient/CMBMobileBank.apk
-      tags: apk
