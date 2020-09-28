@@ -50,7 +50,6 @@
     - name: render gplaycli.conf
       template:
         src: "templates/gplaycli.conf"
-        # put it in home, so we can run gplaycli from there
         dest: "bin/gplaycli.conf"
       tags:
         - files
