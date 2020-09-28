@@ -1,0 +1,42 @@
+#!/usr/bin/env ansible-playbook
+
+- name: run adb from ubuntu desktop to automate tasks on android
+  hosts: localhost
+  gather_facts: no
+  tasks:
+
+    - name: enable developer mode
+      debug:
+        msg: |
+          MIUI -> Settings -> About phone -> MIUI version > click 5 times
+
+    - name: enable developer mode
+      debug:
+        msg: |
+          MIUI -> Settings -> Additional settings -> Developer options, enable these:
+          - USB debugging
+          - Install via USB
+          - USB debugging (Security settings)
+          - Default USB configuration -> File Transfer
+
+    - name: apt install packages
+      become: yes
+      apt:
+        name: adb
+        update_cache: yes
+
+    - command: adb devices -l
+      tags: install
+
+    - name: find downloaded apks
+      find:
+        paths: "{{ playbook_dir }}/download"
+        patterns: "*.apk"
+      register: find
+      tags: install
+
+    - name: adb install apks
+      command: adb install {{ item.path }}
+      ignore_errors: yes
+      loop: "{{ find.files }}"
+      tags: install
