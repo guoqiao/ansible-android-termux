@@ -68,7 +68,7 @@ def main():
             '--format', 'bestaudio',
             '--extract-audio',
             '--audio-format', 'mp3',
-            '--output', f'{MUSIC}/%(artist)s/%(title)s.%(ext)s',
+            '--output', f'{MUSIC}/%(artist)s-%(title)s.%(ext)s',
             url,
         ])
     elif url.startswith('https://play.google.com/store/apps'):
