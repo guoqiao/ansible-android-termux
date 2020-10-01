@@ -17,6 +17,7 @@
       - com.xiaomi.hm.health
       - com.dragonflow  # NETGEAR Genie
       - com.here.app.maps
+      - org.thoughtcrime.securesms
     googleplay_apk_ids_line: "{{ googleplay_apk_ids|join(' ') }}"
 
   tasks:
