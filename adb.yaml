@@ -36,7 +36,6 @@
       tags: install
 
     - name: adb install apks
-      command: adb install {{ item.path }}
-      ignore_errors: yes
+      shell: adb install {{ item.path }} || true
       loop: "{{ find.files }}"
       tags: install
