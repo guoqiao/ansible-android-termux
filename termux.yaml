@@ -17,6 +17,7 @@
         - x11-repo
         - unstable-repo
         - termux-api
+        - termux-exec
         - libxml2
         - libxslt
         - python
