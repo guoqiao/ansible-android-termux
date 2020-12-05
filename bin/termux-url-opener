@@ -61,7 +61,6 @@ def main():
     if url.startswith(('https://www.youtube.com', 'https://youtu.be')):
         run_cmd([
             'youtube-dlc',
-            '--format', 'best',
             '--output', f'{VIDEOS}/%(title)s.%(ext)s',
             url,
         ])
