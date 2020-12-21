@@ -22,10 +22,10 @@ HOME = Path(__file__).home()
 STORAGE = HOME / 'storage'
 
 SHARED = STORAGE / 'shared'
-PICTURES = SHARED / 'pictures'
+PICTURES = STORAGE / 'pictures'
 MUSIC = STORAGE / 'music'
-MOVIES = SHARED / 'movies'
-DOWNLOADS = SHARED / 'downloads'
+MOVIES = STORAGE / 'movies'
+DOWNLOADS = STORAGE / 'downloads'
 
 
 def run_cmd(cmd):
