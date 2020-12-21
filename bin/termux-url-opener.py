@@ -34,6 +34,7 @@ def run_cmd(cmd, cwd=None):
 def main():
     parser = argparse.ArgumentParser(description='Termux URL Opener')
     parser.add_argument('-q', '--quiet', action='store_true', help='Be quiet')
+    parser.add_argument('-w', '--wait-on-finish', dest='wait_on_finish', action='store_true', help='wait on finish')
     parser.add_argument('url', help='url shared to Termux')
 
     args = parser.parse_args()
@@ -64,8 +65,9 @@ def main():
         ])
     else:
         LOG.error('sorry, unable to handle url: %s', url)
-    # termux will be close, sleep for user to read output
-    input('press any key to continue...')
+    if args.wait_on_finish:
+        # termux will be close, sleep for user to read output
+        input('press any key to continue...')
 
 
 if __name__ == '__main__':
