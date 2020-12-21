@@ -16,7 +16,7 @@ from pathlib import Path
 from urllib.parse import urlparse, parse_qs
 
 
-LOG = logging.getLogger(__name__)
+LOG = logging.getLogger()
 CWD = os.getcwd()
 HERE = Path(__file__).parent.resolve()
 MUSIC = os.getenv('TERMUX_MUSIC', default=CWD)
@@ -38,7 +38,7 @@ def main():
 
     args = parser.parse_args()
     level = logging.ERROR if args.quiet else logging.DEBUG
-    fmt = '%(asctime)s %(levelname)s %(name)s: %(message)s'
+    fmt = '%(asctime)s %(levelname)s: %(message)s'
     logging.basicConfig(level=level, format=fmt)
 
     url = args.url
