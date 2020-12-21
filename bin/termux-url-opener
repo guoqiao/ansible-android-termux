@@ -21,15 +21,9 @@ LOG = logging.getLogger(__name__)
 CWD = os.getcwd()
 
 HERE = Path(__file__).parent.resolve()
-HOME = Path(__file__).home()
-STORAGE = HOME / 'storage'
-
-SHARED = os.getenv('TERMUX_SHARED', default=STORAGE/'shared')
-PICTURES = os.getenv('TERMUX_PICTURES', default=STORAGE/'pictures')
-MUSIC = os.getenv('TERMUX_MUSIC', default=STORAGE/'music')
-MUSIC = STORAGE / 'music'
-MOVIES = STORAGE / 'movies'
-DOWNLOADS = STORAGE / 'downloads'
+MUSIC = os.getenv('TERMUX_MUSIC', default=CWD)
+MOVIES = os.getenv('TERMUX_MOVIES', default=CWD)
+DOWNLOADS = os.getenv('TERMUX_DOWNLOADS', default=CWD)
 
 
 def run_cmd(cmd):
