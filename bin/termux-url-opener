@@ -17,9 +17,7 @@ from urllib.parse import urlparse, parse_qs
 
 
 LOG = logging.getLogger(__name__)
-
 CWD = os.getcwd()
-
 HERE = Path(__file__).parent.resolve()
 MUSIC = os.getenv('TERMUX_MUSIC', default=CWD)
 MOVIES = os.getenv('TERMUX_MOVIES', default=CWD)
@@ -47,20 +45,15 @@ def main():
     LOG.info(url)
 
     if url.startswith(('https://www.youtube.com', 'https://youtu.be')):
-        run_cmd([
-            'youtube-dlc',
-            '--output', f'{MOVIES}/%(title)s.%(ext)s',
-            url,
-        ])
+        run_cmd(['youtube-dlc', url], cwd=MOVIES)
     elif url.startswith('https://music.youtube.com'):
         run_cmd([
             'youtube-dlc',
             '--format', 'bestaudio',
             '--extract-audio',
             '--audio-format', 'mp3',
-            '--output', f'{MUSIC}/%(title)s.%(ext)s',
             url,
-        ])
+        ], cwd=MUSIC)
     elif url.startswith('https://play.google.com/store/apps'):
         parse_result = urlparse(url)
         params = parse_qs(parse_result.query)
