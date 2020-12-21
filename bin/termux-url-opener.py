@@ -1,4 +1,4 @@
-#!/data/data/com.termux/files/usr/bin/python
+#!/usr/bin/env python
 """Termux URL Opener
 
 On Android, share URL to Termux, it will be processed by this script.
