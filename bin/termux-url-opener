@@ -26,27 +26,19 @@ MOVIES = os.getenv('TERMUX_MOVIES', default=CWD)
 DOWNLOADS = os.getenv('TERMUX_DOWNLOADS', default=CWD)
 
 
-def run_cmd(cmd):
+def run_cmd(cmd, cwd=None):
     str_cmd = ' '.join(cmd)
-    LOG.info('cmd start: %s', str_cmd)
-    subprocess.check_call(cmd)
+    LOG.info('running cmd: %s', str_cmd)
+    subprocess.check_call(cmd, cwd=cwd)
     LOG.info('cmd finish: %s', str_cmd)
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description='Termux URL Opener',
-        formatter_class=argparse.RawDescriptionHelpFormatter,
-        epilog=__doc__)
-
-    parser.add_argument(
-        '-q', '--quiet', action='store_true', help='Be quiet')
-
-    parser.add_argument(
-        'url', help='url shared to Termux')
+    parser = argparse.ArgumentParser(description='Termux URL Opener')
+    parser.add_argument('-q', '--quiet', action='store_true', help='Be quiet')
+    parser.add_argument('url', help='url shared to Termux')
 
     args = parser.parse_args()
-
     level = logging.ERROR if args.quiet else logging.DEBUG
     fmt = '%(asctime)s %(levelname)s %(name)s: %(message)s'
     logging.basicConfig(level=level, format=fmt)
