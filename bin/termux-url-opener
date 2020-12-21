@@ -1,0 +1,8 @@
+#!/data/data/com.termux/files/usr/bin/bash
+
+export TERMUX_STORAGE=$HOME/storage
+export TERMUX_MUSIC=$TERMUX_STORAGE/music
+export TERMUX_MOVIES=$TERMUX_STORAGE/movies
+export TERMUX_DOWNLOADS=$TERMUX_STORAGE/downloads
+
+/data/data/com.termux/files/usr/bin/python termux-url-opener.py "$@"
