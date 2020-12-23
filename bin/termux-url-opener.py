@@ -17,11 +17,8 @@ from urllib.parse import urlparse, parse_qs
 
 
 LOG = logging.getLogger()
-CWD = os.getcwd()
 HERE = Path(__file__).parent.resolve()
-MUSIC = os.getenv('TERMUX_MUSIC', default=CWD)
-MOVIES = os.getenv('TERMUX_MOVIES', default=CWD)
-DOWNLOADS = os.getenv('TERMUX_DOWNLOADS', default=CWD)
+DOWNLOADS = os.getenv('TERMUX_DOWNLOADS')
 
 
 def run_cmd(cmd, cwd=None):
