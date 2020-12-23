@@ -66,7 +66,10 @@ def youtube_download_audio(url):
 def main():
     parser = argparse.ArgumentParser(description='Termux URL Opener')
     parser.add_argument('-q', '--quiet', action='store_true', help='Be quiet')
-    parser.add_argument('-w', '--wait-on-finish', dest='wait_on_finish', action='store_true', help='wait on finish')
+    parser.add_argument(
+        '-w', '--wait-on-finish',
+        dest='wait_on_finish', action='store_true',
+        help='wait on finish')
     parser.add_argument('url', help='url shared to Termux')
 
     args = parser.parse_args()
