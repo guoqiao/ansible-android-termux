@@ -59,6 +59,7 @@ def youtube_download_audio(url):
         '--format', 'mp3/bestaudio',
         '--extract-audio',
         '--audio-format', 'mp3',
+        '--audio-quality', '0',  # 0: best, 9: worst
         url,
     ], cwd=MUSIC)
 
