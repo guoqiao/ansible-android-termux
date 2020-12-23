@@ -46,7 +46,7 @@ def main():
     LOG.info(url)
 
     if url.startswith(('https://www.youtube.com', 'https://youtu.be')):
-        run_cmd(['youtube-dlc', url], cwd=MOVIES)
+        run_cmd(['youtube-dlc', '--yes-playlist', url], cwd=MOVIES)
     elif url.startswith('https://music.youtube.com'):
         run_cmd([
             'youtube-dlc',
