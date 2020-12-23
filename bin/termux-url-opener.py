@@ -27,7 +27,16 @@ DOWNLOADS = os.getenv('TERMUX_DOWNLOADS', default=CWD)
 def run_cmd(cmd, cwd=None):
     str_cmd = ' '.join(cmd)
     LOG.info('running cmd: %s', str_cmd)
-    subprocess.check_call(cmd, cwd=cwd)
+    try:
+        subprocess.check_call(cmd, cwd=cwd)
+    except subprocess.CalledProcessError as exc:
+        LOG.exception('cmd raised exception')
+        if exc.output:
+            # output is none, but returncode is 1
+            LOG.error('exception output: %s', exc.output)
+            raise
+        else:
+            LOG.info('exception output is empty, ignore')
     LOG.info('cmd finish: %s', str_cmd)
 
 
