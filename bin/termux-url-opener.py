@@ -18,6 +18,8 @@ from urllib.parse import urlparse, parse_qs
 
 LOG = logging.getLogger()
 HERE = Path(__file__).parent.resolve()
+MUSIC = os.getenv('TERMUX_MUSIC')
+MOVIES = os.getenv('TERMUX_MOVIES')
 DOWNLOADS = os.getenv('TERMUX_DOWNLOADS')
 
 
@@ -60,13 +62,13 @@ def main():
             # man youtube-dlc, FORMAT SELECTION
             '--format', 'best,mp3/bestaudio',
             url,
-        ], cwd=DOWNLOADS)
+        ], cwd=MOVIES)
     elif url.startswith('https://music.youtube.com'):
         run_cmd([
             'youtube-dlc',
             '--format', 'mp3/bestaudio',
             url,
-        ], cwd=DOWNLOADS)
+        ], cwd=MUSIC)
     elif url.startswith('https://play.google.com/store/apps'):
         parse_result = urlparse(url)
         params = parse_qs(parse_result.query)
