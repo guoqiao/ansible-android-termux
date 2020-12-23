@@ -37,6 +37,30 @@ def run_cmd(cmd, cwd=None):
         else:
             LOG.info('exception output is empty, ignore')
     LOG.info('cmd finish: %s', str_cmd)
+    if cwd:
+        LOG.info('cwd: %s', cwd)
+
+
+def youtube_download_video(url):
+    return run_cmd([
+        'youtube-dlc',
+        '--yes-playlist', '--ignore-errors',
+        # man youtube-dlc, FORMAT SELECTION
+        '--format', 'bestvideo+bestaudio',
+        url,
+    ], cwd=MOVIES)
+
+
+def youtube_download_audio(url):
+    return run_cmd([
+        'youtube-dlc',
+        '--yes-playlist', '--ignore-errors',
+        # man youtube-dlc, FORMAT SELECTION
+        '--format', 'mp3/bestaudio',
+        '--extract-audio',
+        '--audio-format', 'mp3',
+        url,
+    ], cwd=MUSIC)
 
 
 def main():
@@ -55,20 +79,13 @@ def main():
 
     # '-f', 'bestvideo[ext=mp4]+bestaudio[ext=mp3]/bestvideo+bestaudio',
     if url.startswith(('https://www.youtube.com', 'https://youtu.be')):
-        run_cmd([
-            'youtube-dlc',
-            '--yes-playlist',
-            '--ignore-errors',
-            # man youtube-dlc, FORMAT SELECTION
-            '--format', 'best,mp3/bestaudio',
-            url,
-        ], cwd=MOVIES)
+        answer = input('Download audio? (y/N)')
+        if answer and answer.lower() == 'y':
+            youtube_download_audio(url)
+        else:
+            youtube_download_video(url)
     elif url.startswith('https://music.youtube.com'):
-        run_cmd([
-            'youtube-dlc',
-            '--format', 'mp3/bestaudio',
-            url,
-        ], cwd=MUSIC)
+        youtube_download_audio(url)
     elif url.startswith('https://play.google.com/store/apps'):
         parse_result = urlparse(url)
         params = parse_qs(parse_result.query)
