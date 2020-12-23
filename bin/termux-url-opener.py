@@ -80,7 +80,6 @@ def main():
     url = args.url
     LOG.info(url)
 
-    # '-f', 'bestvideo[ext=mp4]+bestaudio[ext=mp3]/bestvideo+bestaudio',
     if url.startswith(('https://www.youtube.com', 'https://youtu.be')):
         answer = input('Download audio? (y/N)')
         if answer and answer.lower() == 'y':
