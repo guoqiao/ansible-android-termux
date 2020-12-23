@@ -51,24 +51,30 @@ def main():
     url = args.url
     LOG.info(url)
 
+    # '-f', 'bestvideo[ext=mp4]+bestaudio[ext=mp3]/bestvideo+bestaudio',
     if url.startswith(('https://www.youtube.com', 'https://youtu.be')):
-        run_cmd(['youtube-dlc', '--yes-playlist', url], cwd=MOVIES)
+        run_cmd([
+            'youtube-dlc',
+            '--yes-playlist',
+            '--ignore-errors',
+            # man youtube-dlc, FORMAT SELECTION
+            '--format', 'best,mp3/bestaudio',
+            url,
+        ], cwd=DOWNLOADS)
     elif url.startswith('https://music.youtube.com'):
         run_cmd([
             'youtube-dlc',
-            '--format', 'bestaudio',
-            '--extract-audio',
-            '--audio-format', 'mp3',
+            '--format', 'mp3/bestaudio',
             url,
-        ], cwd=MUSIC)
+        ], cwd=DOWNLOADS)
     elif url.startswith('https://play.google.com/store/apps'):
         parse_result = urlparse(url)
         params = parse_qs(parse_result.query)
         run_cmd([
             'gplaycli', '--verbose', '--yes', '--append-version', '--progress',
             '--config', str(HERE/'gplaycli.conf'),
-            '--download', params['id'][0], '--folder', str(DOWNLOADS),
-        ])
+            '--download', params['id'][0],
+        ], cwd=DOWNLOADS)
     else:
         LOG.error('sorry, unable to handle url: %s', url)
     if args.wait_on_finish:
