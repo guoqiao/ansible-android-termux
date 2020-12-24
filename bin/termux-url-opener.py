@@ -81,15 +81,7 @@ def main():
     url = args.url
     LOG.info(url)
 
-    if url.startswith(('https://www.youtube.com', 'https://youtu.be')):
-        answer = input('Download audio? (y/N)')
-        if answer and answer.lower() == 'y':
-            youtube_download_audio(url)
-        else:
-            youtube_download_video(url)
-    elif url.startswith('https://music.youtube.com'):
-        youtube_download_audio(url)
-    elif url.startswith('https://play.google.com/store/apps'):
+    if url.startswith('https://play.google.com/store/apps'):
         parse_result = urlparse(url)
         params = parse_qs(parse_result.query)
         run_cmd([
@@ -98,7 +90,11 @@ def main():
             '--download', params['id'][0],
         ], cwd=DOWNLOADS)
     else:
-        LOG.error('sorry, unable to handle url: %s', url)
+        answer = input('Download audio? (y/N)')
+        if answer and answer.lower() == 'y':
+            youtube_download_audio(url)
+        else:
+            youtube_download_video(url)
     if args.wait_on_finish:
         # termux will be close, sleep for user to read output
         input('press any key to continue...')
