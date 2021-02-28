@@ -1,4 +1,4 @@
-# Ansible Android Termux
+# Ansible Android
 
 Use Ansible to setup Termux on Android.
 
