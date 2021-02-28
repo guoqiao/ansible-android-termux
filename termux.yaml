@@ -18,6 +18,7 @@
         - unstable-repo
         - termux-api
         - termux-exec
+        - termux-tools
         - libxml2
         - libxslt
         - python
