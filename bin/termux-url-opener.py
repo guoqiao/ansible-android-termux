@@ -46,7 +46,7 @@ def youtube_download_video(url):
         'youtube-dlc',
         '--yes-playlist', '--ignore-errors',
         # man youtube-dlc, FORMAT SELECTION
-        '--format', 'bestvideo+bestaudio',
+        '--format', 'bestvideo',
         url,
     ], cwd=MOVIES)
 
