@@ -9,4 +9,4 @@ export TERMUX_MUSIC=$TERMUX_STORAGE/music
 export TERMUX_MOVIES=$TERMUX_STORAGE/movies
 export TERMUX_DOWNLOADS=$TERMUX_STORAGE/downloads
 
-python $HOME/bin/termux-url-opener.py --wait-on-finish "$@"
+python $HOME/bin/any-get.py --wait-on-finish "$@"
